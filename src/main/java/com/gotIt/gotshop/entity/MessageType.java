@@ -9,26 +9,22 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.io.Serializable;
 
-@Table(name = "t_banner")
 @Entity
+@Table(name = "t_message_type")
 @Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
-public class Banner extends BaseEntity implements Serializable {
+public class MessageType extends BaseEntity  implements Serializable {
 
     @Column(length = 50)
-    private String bannerName;
+    private String typeName;
 
     @Column(length = 50)
-    private String bannerImg;
+    private String typeInfo;
 
-    @OneToOne
-    private Product product;
-
-    @Column(columnDefinition = "INT(1)" )
+    @Column(columnDefinition = "INT(1)")
     @Enumerated(EnumType.ORDINAL)
-    private Status bannerStatus;
-
+    private Status typeStatus;
 
 }

@@ -17,7 +17,7 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 public class OrderItem extends BaseEntity implements Serializable {
 
-    @OneToMany
+    @ManyToOne
     private Order order;
 
     @Column(length = 64)

@@ -31,12 +31,14 @@ public class User extends BaseEntity implements Serializable {
     private String mobile;
 
     @OneToMany(mappedBy = "user")
-    private List<UserAddress> userAddress;
+    private List<UserAddress> userAddressList;
 
     @OneToMany(mappedBy = "user")
-    private List<UserCoupon> coupons;
+    private List<UserCoupon> couponList;
 
     @OneToMany(mappedBy = "user")
-    private List<Order> orders;
+    private List<Order> orderList;
 
+    @OneToMany(mappedBy = "user")
+    private List<Message> messageList;
 }
