@@ -28,6 +28,6 @@ public class Category extends BaseEntity implements Serializable {
 
     private Integer sortOrder;
 
-    @OneToMany(mappedBy = "category")
+    @OneToMany(mappedBy = "category",fetch= FetchType.EAGER)
     private List<Product> product;
 }

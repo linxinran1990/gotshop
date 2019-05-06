@@ -6,6 +6,7 @@ import com.gotIt.gotshop.enumer.CategoryStatus;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -13,6 +14,7 @@ import java.util.stream.Collectors;
 import static org.junit.Assert.*;
 
 @Slf4j
+@Transactional
 public class categoryRepositoryTest extends BaseTest {
 
     @Autowired
@@ -21,7 +23,6 @@ public class categoryRepositoryTest extends BaseTest {
     @Test
     public void testQuaryAll(){
         List<Category> categoryList = categoryRepository.findAll();
-
         categoryList.forEach((category)->log.info(category.getCategoryName()));
     }
 
@@ -34,6 +35,11 @@ public class categoryRepositoryTest extends BaseTest {
         category.setSortOrder(1);
 
         categoryRepository.save(category);
+    }
 
+    @Test
+    public void testQuery(){
+        Category category = categoryRepository.getOne(7L);
+        log.info(category.getCategoryName());
     }
 }
