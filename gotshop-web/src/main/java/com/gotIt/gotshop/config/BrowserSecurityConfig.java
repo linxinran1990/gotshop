@@ -2,6 +2,8 @@ package com.gotIt.gotshop.config;
 
 import com.gotIt.gotshop.security.authentication.GotshopAuthenticationSuccessHandler;
 import com.gotIt.gotshop.security.config.AbstractChannelSecurityConfig;
+import com.gotIt.gotshop.security.properties.SecurityConstants;
+import com.gotIt.gotshop.security.social.GotshopSpringSocialConfigurer;
 import com.gotIt.gotshop.security.validate.code.ValidateCodeSecurityConfig;
 import com.gotIt.gotshop.security.validate.mobile.SmsCodeAuthenticationSecurityConfig;
 import com.gotIt.gotshop.security.authentication.GotshopAuthenticationFailHandler;
@@ -15,6 +17,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
+import org.springframework.social.security.SpringSocialConfigurer;
 
 import javax.sql.DataSource;
 
@@ -47,6 +50,10 @@ public class BrowserSecurityConfig extends AbstractChannelSecurityConfig {
     @Autowired
     private SmsCodeAuthenticationSecurityConfig smsCodeAuthenticationSecurityConfig;
 
+
+    @Autowired
+    private SpringSocialConfigurer gotshopSpringSocialConfigurer;
+
     @Bean
     public PersistentTokenRepository persistentTokenRepository() {
         JdbcTokenRepositoryImpl tokenRepository = new JdbcTokenRepositoryImpl();
@@ -70,15 +77,21 @@ public class BrowserSecurityConfig extends AbstractChannelSecurityConfig {
                     .and()
                 .apply(smsCodeAuthenticationSecurityConfig)
                      .and()
+                .apply(gotshopSpringSocialConfigurer)
+                .and()
                 .rememberMe()
                     .tokenRepository(persistentTokenRepository())
                     .tokenValiditySeconds(securityProperties.getBrowser().getRememberMeSeconds())
                     .userDetailsService(userDetailsService)
                 .and()
                 .authorizeRequests()
-                .antMatchers("/authentication/require",
+                .antMatchers(SecurityConstants.DEFAULT_UNAUTHENTICATION_URL,
                         securityProperties.getBrowser().getLoginPage(),
-                        "/code/*").permitAll()
+                        SecurityConstants.DEFAULT_LOGIN_PROCESSING_URL_MOBILE,
+                        SecurityConstants.DEFAULT_VALIDATE_CODE_URL_PREFIX+"/*",
+                        securityProperties.getBrowser().getSignUpUrl(),
+                        "/user/regist"
+                        ).permitAll()
                 .anyRequest()
                 .authenticated()
                 .and()

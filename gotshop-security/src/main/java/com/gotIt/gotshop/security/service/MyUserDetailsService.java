@@ -1,4 +1,4 @@
-package com.gotIt.gotshop.security;
+package com.gotIt.gotshop.security.service;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +8,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.social.security.SocialUser;
+import org.springframework.social.security.SocialUserDetails;
+import org.springframework.social.security.SocialUserDetailsService;
 import org.springframework.stereotype.Component;
 
 /**
@@ -17,7 +20,7 @@ import org.springframework.stereotype.Component;
  */
 @Slf4j
 @Component
-public class MyUserDetailsService implements UserDetailsService {
+public class MyUserDetailsService implements UserDetailsService,SocialUserDetailsService {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -25,9 +28,20 @@ public class MyUserDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         log.info("登录用户名："+username);
+        return buildUser(username);
+    }
 
-        return new User(username,passwordEncoder.encode("123456"),
-                        true,true,true,true,
+    @Override
+    public SocialUserDetails loadUserByUserId(String userId) throws UsernameNotFoundException {
+        log.info("登录用户ID："+userId);
+        return buildUser(userId);
+    }
+
+    private SocialUserDetails buildUser(String userId){
+        String password = passwordEncoder.encode("123456");
+        log.info("密码："+password);
+        return new SocialUser(userId,password,
+                true,true,true,true,
                 AuthorityUtils.commaSeparatedStringToAuthorityList("admin"));
     }
 }

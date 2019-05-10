@@ -6,7 +6,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import javax.validation.constraints.Email;
 import java.io.Serializable;
 import java.util.List;
 
@@ -23,7 +22,7 @@ public class User extends BaseEntity implements Serializable {
 
     private String password;
 
-    @Email
+    //@Email
     private String email;
 
     @Column(length = 20)

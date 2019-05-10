@@ -34,13 +34,15 @@ public class GotshopAuthenticationFailHandler extends SimpleUrlAuthenticationFai
 
     @Override
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException, ServletException {
-        log.info("登录成功");
+        log.info("登录失败");
 
         if(LoginType.JSON.equals(securityProperties.getBrowser().getLoginType())) {
             response.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
             response.setContentType("application/json;charset-UTF-8");
             response.getWriter().write(objectMapper.writeValueAsString(new SimpleResponse(exception)));
+            log.info(exception.toString());
         }else{
+            log.info(exception.toString());
             super.onAuthenticationFailure(request,response,exception);
         }
     }
