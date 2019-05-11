@@ -1,4 +1,4 @@
-package com.gotIt.gotshop.security.controller;
+package com.gotIt.gotshop.browser;
 
 
 import com.gotIt.gotshop.security.properties.SecurityProperties;

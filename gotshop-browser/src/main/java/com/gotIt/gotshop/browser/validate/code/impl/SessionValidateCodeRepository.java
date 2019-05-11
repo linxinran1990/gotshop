@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.gotIt.gotshop.security.session;
+package com.gotIt.gotshop.browser.validate.code.impl;
 
 
 import com.gotIt.gotshop.security.validate.code.ValidateCode;

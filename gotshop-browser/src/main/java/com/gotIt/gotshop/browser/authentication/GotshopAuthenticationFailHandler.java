@@ -1,4 +1,4 @@
-package com.gotIt.gotshop.security.authentication;
+package com.gotIt.gotshop.browser.authentication;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.gotIt.gotshop.security.enumer.LoginType;

@@ -14,7 +14,12 @@ public class BrowserProperties {
 
     private String loginPage = "/signIn.html";
 
+    private String signOutUrl = "/signOut.html";
+
     private LoginType loginType = LoginType.JSON;
+
+    private SessionProperties session = new SessionProperties();
+
 
     private int rememberMeSeconds = 3600;
 
@@ -48,6 +53,22 @@ public class BrowserProperties {
 
     public void setRememberMeSeconds(int rememberMeSeconds) {
         this.rememberMeSeconds = rememberMeSeconds;
+    }
+
+    public String getSignOutUrl() {
+        return signOutUrl;
+    }
+
+    public void setSignOutUrl(String signOutUrl) {
+        this.signOutUrl = signOutUrl;
+    }
+
+    public SessionProperties getSession() {
+        return session;
+    }
+
+    public void setSession(SessionProperties session) {
+        this.session = session;
     }
 }
 
