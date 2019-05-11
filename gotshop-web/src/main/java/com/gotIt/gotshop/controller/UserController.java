@@ -1,7 +1,10 @@
 package com.gotIt.gotshop.controller;
 
+import com.gotIt.gotshop.app.social.AppSingUpUtils;
 import com.gotIt.gotshop.entity.User;
 import com.gotIt.gotshop.security.properties.SecurityProperties;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwts;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -30,22 +33,27 @@ public class UserController {
     @Autowired
     private SecurityProperties securityProperties;
 
+    @Autowired
+    private AppSingUpUtils appSingUpUtils;
+
     @PostMapping("/regist")
     public void regist(User user, HttpServletRequest request){
         String userId = user.getUsername();
-        providerSignInUtils.doPostSignUp(userId,new ServletWebRequest(request));
+        //providerSignInUtils.doPostSignUp(userId,new ServletWebRequest(request));
+        appSingUpUtils.doPostSignUp(new ServletWebRequest(request),userId);
     }
+
 
     @GetMapping("/me")
     public Object getCurrentUser(Authentication user, HttpServletRequest request) throws UnsupportedEncodingException {
-        String token = StringUtils.substringAfter(request.getHeader("Authorization"), "bearer ");
+        String token = StringUtils.substringAfter(request.getHeader("Authorization"), "Bearer ");
 
-       /* Claims claims = Jwts.parser().setSigningKey(securityProperties.getOauth2().getJwtSigningKey().getBytes("UTF-8"))
+        Claims claims = Jwts.parser().setSigningKey(securityProperties.getOauth2().getJwtSigningKey().getBytes("UTF-8"))
                 .parseClaimsJws(token).getBody();
 
         String company = (String) claims.get("company");
 
-        System.out.println(company);*/
+        System.out.println(company);
 
         return user;
 

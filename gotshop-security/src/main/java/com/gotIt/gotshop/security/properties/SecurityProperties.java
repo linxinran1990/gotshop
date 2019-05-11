@@ -1,6 +1,7 @@
 package com.gotIt.gotshop.security.properties;
 
 import com.gotIt.gotshop.security.social.SocialProperties;
+import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**
@@ -9,6 +10,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  * @since <pre>2019/3/10</pre>
  */
 @ConfigurationProperties(prefix = "gotshop.security")
+@Data
 public class SecurityProperties {
 
     private BrowserProperties browser = new BrowserProperties();
@@ -17,29 +19,8 @@ public class SecurityProperties {
 
     private SocialProperties social = new SocialProperties();
 
-    public BrowserProperties getBrowser() {
-        return browser;
-    }
+    private OAuth2Properties Oauth2 = new OAuth2Properties();
 
-    public void setBrowser(BrowserProperties browser) {
-        this.browser = browser;
-    }
-
-    public ValidateCodeProperties getCode() {
-        return code;
-    }
-
-    public void setCode(ValidateCodeProperties code) {
-        this.code = code;
-    }
-
-    public SocialProperties getSocial() {
-        return social;
-    }
-
-    public void setSocial(SocialProperties social) {
-        this.social = social;
-    }
 }
 
 

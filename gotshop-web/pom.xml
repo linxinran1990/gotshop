@@ -31,14 +31,14 @@
     </dependencyManagement>
 
     <dependencies>
-       <!-- <dependency>
+        <!--<dependency>
             <groupId>com.gotIt.gotshop</groupId>
-            <artifactId>gotshop-security</artifactId>
+            <artifactId>gotshop-browser</artifactId>
             <version>${gotshop.version}</version>
         </dependency>-->
         <dependency>
             <groupId>com.gotIt.gotshop</groupId>
-            <artifactId>gotshop-browser</artifactId>
+            <artifactId>gotshop-app</artifactId>
             <version>${gotshop.version}</version>
         </dependency>
         <dependency>
@@ -51,10 +51,6 @@
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-redis</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
@@ -62,6 +58,11 @@
         <dependency>
             <groupId>org.springframework.session</groupId>
             <artifactId>spring-session</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt</artifactId>
+            <version>0.7.0</version>
         </dependency>
     </dependencies>
 

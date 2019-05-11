@@ -31,7 +31,7 @@ public class SessionValidateCodeRepository implements ValidateCodeRepository {
 	private SessionStrategy sessionStrategy = new HttpSessionSessionStrategy();
 
 	/* (non-Javadoc)
-	 * @see com.imooc.security.core.validate.code.ValidateCodeRepository#save(org.springframework.web.context.request.ServletWebRequest, com.imooc.security.core.validate.code.ValidateCode, com.imooc.security.core.validate.code.ValidateCodeType)
+	 * @see ValidateCodeRepository#save(org.springframework.web.context.request.ServletWebRequest, ValidateCode, ValidateCodeType)
 	 */
 	@Override
 	public void save(ServletWebRequest request, ValidateCode code, ValidateCodeType validateCodeType) {

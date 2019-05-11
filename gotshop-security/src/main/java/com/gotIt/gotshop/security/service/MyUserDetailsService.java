@@ -19,7 +19,7 @@ import org.springframework.stereotype.Component;
  * @since <pre>2019/5/6</pre>
  */
 @Slf4j
-@Component
+//@Component
 public class MyUserDetailsService implements UserDetailsService,SocialUserDetailsService {
 
     @Autowired
