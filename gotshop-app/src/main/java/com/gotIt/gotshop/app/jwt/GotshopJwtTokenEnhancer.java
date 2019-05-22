@@ -12,7 +12,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * @author zhailiang
  *
  */
 public class GotshopJwtTokenEnhancer implements TokenEnhancer {

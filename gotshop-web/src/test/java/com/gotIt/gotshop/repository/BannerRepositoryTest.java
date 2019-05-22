@@ -20,8 +20,9 @@ public class BannerRepositoryTest extends BaseTest{
         Banner banner = new Banner();
         banner.setBannerName("大甩卖");
         banner.setBannerImg("http://ll");
-        banner.setBannerStatus(Status.USING);
+       // banner.setBannerStatus(Status.USING);
         //banner.setProduct();
+        bannerRepository.save(banner);
     }
 
     @Test

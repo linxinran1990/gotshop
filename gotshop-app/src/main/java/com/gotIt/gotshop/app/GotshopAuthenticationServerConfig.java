@@ -75,7 +75,7 @@ public class GotshopAuthenticationServerConfig extends AuthorizationServerConfig
                         .secret(client.getClientSecret())
                         .authorizedGrantTypes("refresh_token", "authorization_code", "password")
                         .accessTokenValiditySeconds(client.getAccessTokenValidateSeconds())
-                        .refreshTokenValiditySeconds(2592000)
+                        .refreshTokenValiditySeconds(604800)
                         .scopes("all");
             }
         }

@@ -1,7 +1,6 @@
 package com.gotIt.gotshop.app.authentication;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.gotIt.gotshop.security.enumer.LoginType;
 import com.gotIt.gotshop.security.properties.SecurityProperties;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.codec.binary.StringUtils;

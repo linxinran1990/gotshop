@@ -7,7 +7,7 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.cache.annotation.EnableCaching;
 
 @EnableConfigurationProperties
-@EnableCaching
+@EnableCaching(proxyTargetClass = true)
 @SpringBootApplication
 @Slf4j
 public class GotshopApplication {

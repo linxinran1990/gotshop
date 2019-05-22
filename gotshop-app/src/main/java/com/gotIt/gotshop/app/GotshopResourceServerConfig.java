@@ -50,8 +50,8 @@ public class GotshopResourceServerConfig extends ResourceServerConfigurerAdapter
         http.formLogin()
                 .loginPage(SecurityConstants.DEFAULT_UNAUTHENTICATION_URL)
                 .loginProcessingUrl(SecurityConstants.DEFAULT_LOGIN_PROCESSING_URL_FORM)
-                .successHandler(gotshopAuthenticationSuccessHandler)
-                .failureHandler(gotshopAuthenticationFailureHandler);
+                 .successHandler(gotshopAuthenticationSuccessHandler)
+                 .failureHandler(gotshopAuthenticationFailureHandler);
 
         http.apply(validateCodeSecurityConfig)
                 .and()

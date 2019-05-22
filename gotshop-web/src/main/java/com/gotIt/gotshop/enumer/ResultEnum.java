@@ -7,6 +7,8 @@ import lombok.Getter;
 public enum ResultEnum {
     SUCCESS(0, "成功"),
 
+    ERROR(500,"系统内部错误"),
+
     PARAM_ERROR(1, "参数不正确"),
 
     PRODUCT_NOT_EXIST(10, "商品不存在"),
@@ -42,6 +44,8 @@ public enum ResultEnum {
     LOGIN_FAIL(25, "登录失败, 登录信息不正确"),
 
     LOGOUT_SUCCESS(26, "登出成功"),
+
+    CATEGORY_INEFFECTIVE(27,"目录以失效"),
     ;
 
     private Integer code;

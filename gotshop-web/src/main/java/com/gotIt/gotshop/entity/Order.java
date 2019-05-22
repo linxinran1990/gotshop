@@ -48,11 +48,11 @@ public class Order extends BaseEntity implements Serializable {
     private String payNo;
 
 
-    @Column(columnDefinition = "INT(3)" )
+    @Column(columnDefinition = "INT(3) default 0" )
     @Enumerated(EnumType.ORDINAL)
     private OrderStatus orderStatus;
 
-    @Column(columnDefinition = "INT(3)" )
+    @Column(columnDefinition = "INT(3) default 0" )
     @Enumerated(EnumType.ORDINAL)
     private PayStatus payStatus;
 

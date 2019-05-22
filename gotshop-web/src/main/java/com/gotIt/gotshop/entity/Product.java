@@ -42,7 +42,7 @@ public class Product extends BaseEntity implements Serializable {
     @Column(length = 50)
     private String productInfoImg;
 
-    @Column(columnDefinition = "INT(1)")
+    @Column(columnDefinition = "INT(1) default 0")
     @Enumerated(EnumType.ORDINAL)
     private ProductStatus productStatus;
 

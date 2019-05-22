@@ -26,7 +26,7 @@ public class Banner extends BaseEntity implements Serializable {
     @OneToOne
     private Product product;
 
-    @Column(columnDefinition = "INT(1)" )
+    @Column(columnDefinition = "INT(1) default 0" )
     @Enumerated(EnumType.ORDINAL)
     private Status bannerStatus;
 

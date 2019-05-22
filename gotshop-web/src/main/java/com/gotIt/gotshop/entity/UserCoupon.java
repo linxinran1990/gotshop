@@ -23,7 +23,7 @@ public class UserCoupon extends BaseEntity implements Serializable {
     @ManyToOne
     private Coupon coupon;
 
-    @Column(columnDefinition = "INT(1)")
+    @Column(columnDefinition = "INT(1) default 0")
     @Enumerated(EnumType.ORDINAL)
     private CouponStatus status;
 }

@@ -22,7 +22,7 @@ public class Category extends BaseEntity implements Serializable {
 
     private String categoryName;
 
-    @Column(columnDefinition = "INT(1)" )
+    @Column(columnDefinition = "INT(1) default 0" )
     @Enumerated(EnumType.ORDINAL)
     private CategoryStatus categoryStatus;
 

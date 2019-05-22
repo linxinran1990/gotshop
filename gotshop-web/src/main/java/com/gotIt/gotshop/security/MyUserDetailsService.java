@@ -1,9 +1,10 @@
-package com.gotIt.gotshop.security.service;
+package com.gotIt.gotshop.security;
 
+import com.gotIt.gotshop.entity.User;
+import com.gotIt.gotshop.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.AuthorityUtils;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -19,11 +20,14 @@ import org.springframework.stereotype.Component;
  * @since <pre>2019/5/6</pre>
  */
 @Slf4j
-//@Component
+@Component
 public class MyUserDetailsService implements UserDetailsService,SocialUserDetailsService {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private UserService userService;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -38,7 +42,8 @@ public class MyUserDetailsService implements UserDetailsService,SocialUserDetail
     }
 
     private SocialUserDetails buildUser(String userId){
-        String password = passwordEncoder.encode("123456");
+        User user  = userService.findByName(userId);
+        String password = user.getPassword();
         log.info("密码："+password);
         return new SocialUser(userId,password,
                 true,true,true,true,

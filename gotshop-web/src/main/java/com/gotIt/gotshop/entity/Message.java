@@ -21,7 +21,7 @@ public class Message extends BaseEntity implements Serializable {
     @ManyToOne
     private User user;
 
-    @Column(columnDefinition = "INT(1)")
+    @Column(columnDefinition = "INT(1) default 0")
     @Enumerated(EnumType.ORDINAL)
     private MessageStatus messageStatus;
 

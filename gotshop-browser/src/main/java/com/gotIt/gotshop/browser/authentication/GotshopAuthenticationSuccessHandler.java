@@ -19,7 +19,7 @@ import java.io.IOException;
  * @version 1.0
  * @since <pre>2019/3/10</pre>
  */
-@Component("gotshopAuthenticationSuccessHandler")
+//@Component("gotshopAuthenticationSuccessHandler")
 @Slf4j
 public class GotshopAuthenticationSuccessHandler extends SavedRequestAwareAuthenticationSuccessHandler {
 

@@ -23,7 +23,7 @@ public class MessageType extends BaseEntity  implements Serializable {
     @Column(length = 50)
     private String typeInfo;
 
-    @Column(columnDefinition = "INT(1)")
+    @Column(columnDefinition = "INT(1) default 0")
     @Enumerated(EnumType.ORDINAL)
     private Status typeStatus;
 

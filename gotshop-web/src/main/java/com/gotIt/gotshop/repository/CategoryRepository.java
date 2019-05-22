@@ -6,5 +6,6 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
 public interface CategoryRepository extends JpaRepository<Category,Long>,JpaSpecificationExecutor<Category> {
 
+    Category findByCategoryName(String categoryName);
 
 }
