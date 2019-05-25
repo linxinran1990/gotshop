@@ -1,22 +1,24 @@
 package com.gotIt.gotshop.exception;
 
 import com.gotIt.gotshop.enumer.ResultEnum;
+import lombok.Data;
 
 /**
  * @author linxr
  * @version 1.0
  * @since <pre>2019/5/16</pre>
  */
-public class ShopWebException extends RuntimeException {
+@Data
+public class ServiceException extends RuntimeException {
     private Integer code;
 
-    public ShopWebException(ResultEnum resultEnum) {
+    public ServiceException(ResultEnum resultEnum) {
         super(resultEnum.getMessage());
 
         this.code = resultEnum.getCode();
     }
 
-    public ShopWebException(Integer code, String message) {
+    public ServiceException(Integer code, String message) {
         super(message);
         this.code = code;
     }

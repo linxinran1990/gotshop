@@ -17,12 +17,12 @@ public class BannerForm {
 
     private Long id;
 
-    @NotEmpty(message = "名称不能为空")
+    //@NotEmpty(message = "名称不能为空")
     private String bannerName;
 
     private String bannerImg;
 
-    @NotEmpty(message = "产品Id不能为空")
+    //@NotEmpty(message = "产品Id不能为空")
     private Long productId;
 }
 

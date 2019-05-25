@@ -1,6 +1,5 @@
-package com.gotIt.gotshop.enumer;
+package com.gotIt.gotshop.app.enumer;
 
-import lombok.Data;
 import lombok.Getter;
 
 @Getter

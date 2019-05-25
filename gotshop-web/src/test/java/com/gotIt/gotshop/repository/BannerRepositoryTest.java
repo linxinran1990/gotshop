@@ -6,6 +6,8 @@ import com.gotIt.gotshop.enumer.Status;
 import com.gotIt.gotshop.repository.BannerRepository;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.transaction.annotation.Transactional;
 
 @Transactional
@@ -28,5 +30,15 @@ public class BannerRepositoryTest extends BaseTest{
     @Test
     public void testOne(){
         Banner banner = bannerRepository.getOne(14L);
+    }
+
+
+    @Test
+    public void testFindByBanner(){
+        Banner banner = new Banner();
+        banner.setBannerName("带甩卖");
+        PageRequest pageRequest = new PageRequest(1,10);
+
+        Page<Banner> banners = bannerRepository.findAll(pageRequest);
     }
 }

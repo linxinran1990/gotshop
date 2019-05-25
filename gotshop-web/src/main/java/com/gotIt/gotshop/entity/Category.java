@@ -12,10 +12,10 @@ import java.util.List;
 
 @Table(name = "t_category")
 @Entity
-@Data
+//@Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
+//@Builder
 public class Category extends BaseEntity implements Serializable {
 
     private Long parentId;
@@ -29,5 +29,45 @@ public class Category extends BaseEntity implements Serializable {
     private Integer sortOrder;
 
     @OneToMany(mappedBy = "category",fetch= FetchType.EAGER)
-    private List<Product> product;
+    private List<Product> products;
+
+    public Long getParentId() {
+        return parentId;
+    }
+
+    public void setParentId(Long parentId) {
+        this.parentId = parentId;
+    }
+
+    public String getCategoryName() {
+        return categoryName;
+    }
+
+    public void setCategoryName(String categoryName) {
+        this.categoryName = categoryName;
+    }
+
+    public CategoryStatus getCategoryStatus() {
+        return categoryStatus;
+    }
+
+    public void setCategoryStatus(CategoryStatus categoryStatus) {
+        this.categoryStatus = categoryStatus;
+    }
+
+    public Integer getSortOrder() {
+        return sortOrder;
+    }
+
+    public void setSortOrder(Integer sortOrder) {
+        this.sortOrder = sortOrder;
+    }
+
+    public List<Product> getProducts() {
+        return products;
+    }
+
+    public void setProducts(List<Product> products) {
+        this.products = products;
+    }
 }

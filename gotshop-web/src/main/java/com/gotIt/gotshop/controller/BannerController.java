@@ -2,21 +2,23 @@ package com.gotIt.gotshop.controller;
 
 import com.gotIt.gotshop.entity.Banner;
 import com.gotIt.gotshop.enumer.ResultEnum;
-import com.gotIt.gotshop.exception.ShopWebException;
+import com.gotIt.gotshop.exception.ServiceException;
 import com.gotIt.gotshop.form.BannerForm;
 import com.gotIt.gotshop.service.admin.BannerService;
 import com.gotIt.gotshop.utils.ResultVOUtils;
+import com.gotIt.gotshop.vo.BannerVO;
 import com.gotIt.gotshop.vo.ResultVO;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -25,35 +27,33 @@ import java.util.Map;
  * @since <pre>2019/5/21</pre>
  */
 @RestController
-@RequestMapping("/banner")
+@RequestMapping("/back")
 public class BannerController {
 
     @Autowired
     private BannerService bannerService;
 
-    @PostMapping("/save")
-    public ResultVO<Map<String, String>> saveBanner(@Valid BannerForm bannerForm,
-                                        BindingResult bindingResult,
-                                            Map<String, Object> map){
+    @PostMapping("/banner")
+    public ResultVO<Map<String, String>> saveBanner(@Valid @RequestBody BannerForm bannerForm,
+                                        BindingResult bindingResult){
         if(bindingResult.hasErrors()){
             String msg = bindingResult.getFieldError().getDefaultMessage().toString();
-            throw new ShopWebException(ResultEnum.PARAM_ERROR.getCode(), msg);
+            throw new ServiceException(ResultEnum.PARAM_ERROR.getCode(), msg);
         }
-
-        Banner banner = new Banner();
-        try{
-            if(bannerForm.getId() !=null){
-                banner = bannerService.findOne(bannerForm.getId());
-            }
-            BeanUtils.copyProperties(bannerForm,banner);
-            bannerService.save(banner);
-        }catch (Exception e){
-            ResultVOUtils.error(ResultEnum.ERROR.getCode(),e.getMessage());
-        }
-
-        map.put("bannerId",banner.getId());
-        return ResultVOUtils.success(map);
+        return bannerService.save(bannerForm);
     }
+
+    @GetMapping("/banner")
+    public ResultVO<Page<BannerVO>>  getBanner(@RequestParam("bannerName") String bannerName,
+                                               @RequestParam(value = "page", defaultValue = "0") Integer page,
+                                               @RequestParam(value = "size", defaultValue = "10") Integer size){
+
+        PageRequest pageRequest = new PageRequest(page,size);
+        Page<Banner> banners = bannerService.findByPage(bannerName, pageRequest);
+
+         return ResultVOUtils.success(banners);
+    }
+
 }
 
 

@@ -1,10 +1,15 @@
 package com.gotIt.gotshop.service.admin;
 
 import com.gotIt.gotshop.entity.Banner;
+import com.gotIt.gotshop.form.BannerForm;
+import com.gotIt.gotshop.vo.BannerVO;
+import com.gotIt.gotshop.vo.ResultVO;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author linxr
@@ -15,9 +20,9 @@ public interface BannerService {
 
     List<Banner> findAll();
 
-    Banner save(Banner banner);
+    ResultVO<Map<String, String>> save(BannerForm bannerForm);
 
-    Page<Banner> findByPage(Pageable pageable);
+    Page<Banner> findByPage(String bannerName, Pageable pageRequest);
 
     Long removeBanner(Long bannerId);
 

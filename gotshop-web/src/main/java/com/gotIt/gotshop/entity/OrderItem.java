@@ -23,7 +23,7 @@ public class OrderItem extends BaseEntity implements Serializable {
     @Column(length = 64)
     private String openid;
 
-    @OneToOne
+    @ManyToOne
     private Product product;
 
     @Column(length = 50)

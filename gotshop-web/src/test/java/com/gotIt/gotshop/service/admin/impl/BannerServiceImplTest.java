@@ -24,16 +24,16 @@ public class BannerServiceImplTest extends BaseTest{
     @Autowired
     private ProductRepository productRepository;
 
-    @Test
+    /*@Test
     public void findAll(){
         List<Banner> bannerList = bannerService.findAll();
 
         bannerList.forEach(banner -> log.info(banner.getBannerName()+",状态："+banner.getBannerStatus()+":"+
                 banner.getProduct().getCategory().getCategoryName())
             );
-    }
+    }*/
 
-    @Test
+    /*@Test
     public void save(){
         Product product = productRepository.getOne(1L);
         Banner banner = new Banner();
@@ -41,16 +41,16 @@ public class BannerServiceImplTest extends BaseTest{
         banner.setBannerImg("http://11");
         banner.setBannerName("美国苹果");
 
-        bannerService.save(banner);
-    }
+        //bannerService.save(banner);
+    }*/
 
     @Test
     public void findByPage(){
-        PageRequest pageRequest = new PageRequest(1,10);
+        /*PageRequest pageRequest = new PageRequest(1,10);
 
         Page<Banner> result = bannerService.findByPage(pageRequest);
 
-        log.info(result.toString());
+        log.info(result.toString());*/
 
     }
 

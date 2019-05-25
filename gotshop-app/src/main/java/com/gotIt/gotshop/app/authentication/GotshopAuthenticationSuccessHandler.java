@@ -1,6 +1,7 @@
 package com.gotIt.gotshop.app.authentication;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.gotIt.gotshop.app.utils.ResultVOUtils;
 import com.gotIt.gotshop.security.properties.SecurityProperties;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.codec.binary.StringUtils;
@@ -80,7 +81,7 @@ public class GotshopAuthenticationSuccessHandler extends SavedRequestAwareAuthen
         OAuth2AccessToken token = authorizationServerTokenServices.createAccessToken(oAuth2Authentication);
 
         response.setContentType("application/json;charset=UTF-8");
-        response.getWriter().write(objectMapper.writeValueAsString(token));
+        response.getWriter().write(objectMapper.writeValueAsString(ResultVOUtils.success(token)));
 
     }
 

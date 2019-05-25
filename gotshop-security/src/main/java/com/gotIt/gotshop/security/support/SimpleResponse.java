@@ -7,18 +7,18 @@ package com.gotIt.gotshop.security.support;
  */
 public class SimpleResponse {
 
-    private Object content;
+    private Object data;
 
-    public Object getContent() {
-        return content;
+    public Object getData() {
+        return data;
     }
 
-    public void setContent(Object content) {
-        this.content = content;
+    public void setData(Object data) {
+        this.data = data;
     }
 
-    public SimpleResponse(Object content) {
-        this.content = content;
+    public SimpleResponse(Object data) {
+        this.data = data;
     }
 }
 

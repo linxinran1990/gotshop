@@ -9,11 +9,12 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.List;
 
 @Entity
 @Table(name = "t_product")
-@Data
-@Builder
+//@Data
+//@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class Product extends BaseEntity implements Serializable {
@@ -46,9 +47,97 @@ public class Product extends BaseEntity implements Serializable {
     @Enumerated(EnumType.ORDINAL)
     private ProductStatus productStatus;
 
-    @OneToOne(mappedBy = "product")
-    private OrderItem orderItem;
+    @OneToMany(mappedBy = "product")
+    private List<OrderItem> orderItem;
 
-    @OneToOne(mappedBy = "product")
-    private Banner banners;
+    @OneToMany(mappedBy = "product")
+    private List<Banner> banners;
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
+
+    public String getProductName() {
+        return productName;
+    }
+
+    public void setProductName(String productName) {
+        this.productName = productName;
+    }
+
+    public String getProductInfo() {
+        return productInfo;
+    }
+
+    public void setProductInfo(String productInfo) {
+        this.productInfo = productInfo;
+    }
+
+    public String getProductImg() {
+        return productImg;
+    }
+
+    public void setProductImg(String productImg) {
+        this.productImg = productImg;
+    }
+
+    public BigDecimal getProductPrice() {
+        return productPrice;
+    }
+
+    public void setProductPrice(BigDecimal productPrice) {
+        this.productPrice = productPrice;
+    }
+
+    public BigDecimal getProductOrgPrice() {
+        return productOrgPrice;
+    }
+
+    public void setProductOrgPrice(BigDecimal productOrgPrice) {
+        this.productOrgPrice = productOrgPrice;
+    }
+
+    public Integer getProductStock() {
+        return productStock;
+    }
+
+    public void setProductStock(Integer productStock) {
+        this.productStock = productStock;
+    }
+
+    public String getProductInfoImg() {
+        return productInfoImg;
+    }
+
+    public void setProductInfoImg(String productInfoImg) {
+        this.productInfoImg = productInfoImg;
+    }
+
+    public ProductStatus getProductStatus() {
+        return productStatus;
+    }
+
+    public void setProductStatus(ProductStatus productStatus) {
+        this.productStatus = productStatus;
+    }
+
+    public List<OrderItem> getOrderItem() {
+        return orderItem;
+    }
+
+    public void setOrderItem(List<OrderItem> orderItem) {
+        this.orderItem = orderItem;
+    }
+
+    public List<Banner> getBanners() {
+        return banners;
+    }
+
+    public void setBanners(List<Banner> banners) {
+        this.banners = banners;
+    }
 }

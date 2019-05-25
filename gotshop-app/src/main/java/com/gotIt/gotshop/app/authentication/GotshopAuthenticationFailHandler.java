@@ -1,6 +1,9 @@
 package com.gotIt.gotshop.app.authentication;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.util.JSONPObject;
+import com.gotIt.gotshop.app.enumer.ResultEnum;
+import com.gotIt.gotshop.app.utils.ResultVOUtils;
 import com.gotIt.gotshop.security.enumer.LoginType;
 import com.gotIt.gotshop.security.properties.SecurityProperties;
 import com.gotIt.gotshop.security.support.SimpleResponse;
@@ -36,10 +39,11 @@ public class GotshopAuthenticationFailHandler extends SimpleUrlAuthenticationFai
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException, ServletException {
         log.info("登录失败");
 
+
         if(LoginType.JSON.equals(securityProperties.getBrowser().getLoginType())) {
             response.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
-            response.setContentType("application/json;charset-UTF-8");
-            response.getWriter().write(objectMapper.writeValueAsString(new SimpleResponse(exception)));
+            response.setContentType("application/json;charset=UTF-8");
+            response.getWriter().write(objectMapper.writeValueAsString(ResultVOUtils.error(ResultEnum.LOGIN_FAIL.getCode(),ResultEnum.LOGIN_FAIL.getMessage())));
             log.info(exception.toString());
         }else{
             log.info(exception.toString());

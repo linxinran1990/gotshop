@@ -1,6 +1,8 @@
 package com.gotIt.gotshop.security;
 
 import com.gotIt.gotshop.entity.User;
+import com.gotIt.gotshop.enumer.ResultEnum;
+import com.gotIt.gotshop.exception.ServiceException;
 import com.gotIt.gotshop.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,6 +45,9 @@ public class MyUserDetailsService implements UserDetailsService,SocialUserDetail
 
     private SocialUserDetails buildUser(String userId){
         User user  = userService.findByName(userId);
+        if(user == null){
+            throw new ServiceException(ResultEnum.USER_ERROR);
+        }
         String password = user.getPassword();
         log.info("密码："+password);
         return new SocialUser(userId,password,
