@@ -38,7 +38,7 @@ public class ProductServiceImplTest extends BaseTest {
         product.setProductStatus(ProductStatus.NEW);
         product.setProductStock(1);
 
-        productService.save(product);
+       // productService.save(product);
 
     }
 

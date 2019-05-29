@@ -6,11 +6,15 @@ import com.gotIt.gotshop.enumer.CategoryStatus;
 import com.gotIt.gotshop.enumer.ProductStatus;
 import com.gotIt.gotshop.enumer.ResultEnum;
 import com.gotIt.gotshop.exception.ServiceException;
+import com.gotIt.gotshop.repository.CategoryRepository;
 import com.gotIt.gotshop.repository.ProductRepository;
 import com.gotIt.gotshop.service.admin.ProductService;
 import com.gotIt.gotshop.support.AbstractDomain2InfoConverter;
 import com.gotIt.gotshop.support.QueryResultConverter;
+import com.gotIt.gotshop.utils.ResultVOUtils;
 import com.gotIt.gotshop.vo.ProductInfo;
+import com.gotIt.gotshop.vo.ResultVO;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -18,6 +22,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.awt.print.Book;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author linxr
@@ -28,21 +34,35 @@ import java.awt.print.Book;
 public class ProductServiceImpl implements ProductService {
 
     @Autowired
-    private ProductRepository repository;
+    private ProductRepository productRepository;
+
+    @Autowired
+    private CategoryRepository categoryRepository;
 
     @Override
-    public Product save(Product product) {
-        Category category = product.getCategory();
-        if(category.getCategoryStatus().equals(CategoryStatus.ineffective)){
+    public ResultVO<Map<String,String>> save(ProductInfo productInfo) {
+        Map map = new HashMap();
+        Product product = new Product();
+
+        Category category = categoryRepository.findOne(productInfo.getCategoryId());
+        if(category ==  null||category.getCategoryStatus().equals(CategoryStatus.ineffective)){
             throw new ServiceException(ResultEnum.CATEGORY_INEFFECTIVE);
         }
+
+        if(productInfo.getId()!=null){
+            product = productRepository.findOne(productInfo.getId());
+        }
+        BeanUtils.copyProperties(productInfo,product);
         product.setProductStatus(ProductStatus.NEW);
-        return  repository.save(product);
+        product.setCategory(category);
+        productRepository.save(product);
+        map.put("id",product.getId());
+        return ResultVOUtils.success(map);
     }
 
     @Override
     public Page<ProductInfo> findByPage(Pageable pageable) {
-        Page<Product> productPage = repository.findAll(pageable);
+        Page<Product> productPage = productRepository.findAll(pageable);
         return QueryResultConverter.convert(productPage, pageable, new AbstractDomain2InfoConverter<Product, ProductInfo>() {
             @Override
             protected void doConvert(Product domain, ProductInfo info) throws Exception {
@@ -54,7 +74,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Long removeProduct(Long productId) {
-        repository.delete(productId);
+        productRepository.delete(productId);
         return productId;
     }
 }

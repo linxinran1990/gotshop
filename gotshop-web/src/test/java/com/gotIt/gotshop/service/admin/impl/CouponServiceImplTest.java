@@ -29,10 +29,10 @@ public class CouponServiceImplTest extends BaseTest{
         coupon.setCouponValue(new BigDecimal(5));
         coupon.setEndDate(new Date());
         coupon.setStartDate(new Date(-10));
-        coupon.setSituation(CouponSituation.COMMOM);
+        coupon.setSituation(CouponSituation.COMMON);
         coupon.setCreateTime(new Date());
 
-        couponService.save(coupon);
+        //couponService.save(coupon);
     }
 
 
@@ -40,7 +40,7 @@ public class CouponServiceImplTest extends BaseTest{
     public void findByPage(){
         PageRequest pageRequest = new PageRequest(1,10);
 
-        Page<Coupon> result = couponService.findByPage(pageRequest);
+       // Page<Coupon> result = couponService.findByPage(pageRequest);
 
         log.info("");
 

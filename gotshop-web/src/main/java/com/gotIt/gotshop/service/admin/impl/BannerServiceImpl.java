@@ -1,21 +1,25 @@
 package com.gotIt.gotshop.service.admin.impl;
 
 import com.gotIt.gotshop.entity.Banner;
+import com.gotIt.gotshop.entity.Product;
 import com.gotIt.gotshop.enumer.ResultEnum;
 import com.gotIt.gotshop.enumer.Status;
 import com.gotIt.gotshop.exception.ServiceException;
 import com.gotIt.gotshop.form.BannerForm;
 import com.gotIt.gotshop.repository.BannerRepository;
+import com.gotIt.gotshop.repository.ProductRepository;
+import com.gotIt.gotshop.repository.spec.BannerSpec;
 import com.gotIt.gotshop.service.admin.BannerService;
+import com.gotIt.gotshop.support.AbstractDomain2InfoConverter;
+import com.gotIt.gotshop.support.QueryResultConverter;
 import com.gotIt.gotshop.utils.ResultVOUtils;
+import com.gotIt.gotshop.vo.BannerInfo;
+import com.gotIt.gotshop.vo.BannerVO;
 import com.gotIt.gotshop.vo.ResultVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.CacheConfig;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -36,6 +40,9 @@ public class BannerServiceImpl implements BannerService {
     @Autowired
     private BannerRepository bannerRepository;
 
+    @Autowired
+    private ProductRepository productRepository;
+
     @Override
     //@Cacheable
     public List<Banner> findAll() {
@@ -47,35 +54,49 @@ public class BannerServiceImpl implements BannerService {
     public ResultVO<Map<String, String>> save(BannerForm bannerForm) {
         Map map = new HashMap();
         Banner banner = new Banner();
-        try{
-            if(bannerForm.getId() !=null){
+        if(bannerForm.getId() !=null){
                 banner = bannerRepository.findOne(bannerForm.getId());
-            }
-            BeanUtils.copyProperties(bannerForm,banner);
-            bannerRepository.save(banner);
-        }catch (Exception e){
-            ResultVOUtils.error(ResultEnum.ERROR.getCode(),e.getMessage());
         }
 
-        map.put("bannerId",banner.getId());
+        BeanUtils.copyProperties(bannerForm,banner);
+        banner.setBannerStatus(Status.USING);
+        Long productId  = bannerForm.getProductId();
+        Product product = productRepository.getOne(productId);
+        if(product == null){
+                throw new ServiceException(ResultEnum.PRODUCT_NOT_EXIST);
+        }
+        banner.setProduct(product);
+        bannerRepository.save(banner);
+
+        map.put("id",banner.getId());
         return ResultVOUtils.success(map);
     }
 
     @Override
-    public Page<Banner> findByPage(String bannerName,Pageable pageable) {
+    public Page<BannerVO> findByPage(BannerVO bannerCondition, Pageable pageable) {
 
-        Page<Banner> bannerPage = bannerRepository.findByBannerNameOrderByUpdateTimeDesc(bannerName, pageable);
-        //System.out.println(bannerPage.getContent());
-        //return bannerPage;
-
-        return new PageImpl<Banner>(bannerPage.getContent(), pageable, bannerPage.getTotalElements());
-
+        Page<Banner> bannerPage = bannerRepository.findAll(new BannerSpec(bannerCondition),pageable);
+        return QueryResultConverter.convert(bannerPage, pageable, new AbstractDomain2InfoConverter<Banner, BannerVO>() {
+            @Override
+            protected void doConvert(Banner domain, BannerVO info) throws Exception {
+                info.setProductName(domain.getProduct().getProductName());
+                info.setProductId(domain.getProduct().getId());
+            }
+        });
     }
 
     @Override
-    public Long removeBanner(Long bannerId) {
-         bannerRepository.delete(bannerId);
-        return bannerId;
+    public ResultVO<Map<String, String>> removeBanner(Long bannerId) {
+        Map map = new HashMap();
+        try {
+            bannerRepository.delete(bannerId);
+        }catch (Exception e){
+            log.error(e.getStackTrace().toString());
+            throw new ServiceException(ResultEnum.DELETE_NOT_EXIST);
+        }
+
+       map.put("id",bannerId);
+        return ResultVOUtils.success(map);
     }
 
     @Override

@@ -1,20 +1,13 @@
 package com.gotIt.gotshop.vo;
 
-import com.gotIt.gotshop.entity.Product;
-import lombok.Data;
-import org.hibernate.validator.constraints.NotEmpty;
-
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
  * @author linxr
  * @version 1.0
- * @since <pre>2019/5/23</pre>
+ * @since <pre>2019/5/26</pre>
  */
-@Data
-public class BannerVO {
+public class BannerInfo {
 
     private Long id;
 
@@ -30,6 +23,9 @@ public class BannerVO {
 
     private Date updateTime;
 
+    private Date createBegin;
+
+    private Date createEnd;
 }
 
 

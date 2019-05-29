@@ -22,9 +22,9 @@ public interface BannerService {
 
     ResultVO<Map<String, String>> save(BannerForm bannerForm);
 
-    Page<Banner> findByPage(String bannerName, Pageable pageRequest);
+    Page<BannerVO> findByPage(BannerVO bannerCondition, Pageable pageRequest);
 
-    Long removeBanner(Long bannerId);
+    ResultVO<Map<String, String>> removeBanner(Long bannerId);
 
     Banner findOne(Long bannerId);
 }

@@ -20,7 +20,7 @@ public class MessageTypeServiceImplTest extends BaseTest{
         messageType.setTypeInfo("新品上市");
         messageType.setTypeName("New Product");
 
-        messageTypeService.save(messageType);
+        //messageTypeService.save(messageType);
 
     }
 }

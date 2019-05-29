@@ -4,6 +4,7 @@ import com.gotIt.gotshop.BaseTest;
 import com.gotIt.gotshop.entity.Category;
 import com.gotIt.gotshop.entity.Product;
 import com.gotIt.gotshop.enumer.ProductStatus;
+import com.gotIt.gotshop.form.BannerForm;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
@@ -34,5 +35,15 @@ public class ProductRepositoryTest extends BaseTest{
         product.setProductStock(1);
 
         productRepository.save(product);
+    }
+
+    @Test
+    public void testFindOne(){
+        BannerForm bannerForm = new BannerForm();
+        bannerForm.setProductId(1L);
+        Long productId  = bannerForm.getProductId();
+        Product product = productRepository.findOne(productId);
+
+        System.out.println(product);
     }
 }

@@ -6,6 +6,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.Column;
 import javax.persistence.OneToOne;
+import javax.validation.constraints.NotNull;
 
 /**
  * @author linxr
@@ -17,13 +18,14 @@ public class BannerForm {
 
     private Long id;
 
-    //@NotEmpty(message = "名称不能为空")
+    @NotEmpty(message = "名称不能为空")
     private String bannerName;
 
     private String bannerImg;
 
-    //@NotEmpty(message = "产品Id不能为空")
+    @NotNull(message = "产品Id不能为空")
     private Long productId;
+
 }
 
 

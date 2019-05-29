@@ -27,33 +27,36 @@ import java.util.Map;
  * @since <pre>2019/5/21</pre>
  */
 @RestController
-@RequestMapping("/back")
+@RequestMapping("/back/banner")
 public class BannerController {
 
     @Autowired
     private BannerService bannerService;
 
-    @PostMapping("/banner")
+    @PostMapping
     public ResultVO<Map<String, String>> saveBanner(@Valid @RequestBody BannerForm bannerForm,
                                         BindingResult bindingResult){
         if(bindingResult.hasErrors()){
             String msg = bindingResult.getFieldError().getDefaultMessage().toString();
             throw new ServiceException(ResultEnum.PARAM_ERROR.getCode(), msg);
         }
-        return bannerService.save(bannerForm);
+        ResultVO<Map<String, String>> save = bannerService.save(bannerForm);
+        return save;
     }
 
-    @GetMapping("/banner")
-    public ResultVO<Page<BannerVO>>  getBanner(@RequestParam("bannerName") String bannerName,
-                                               @RequestParam(value = "page", defaultValue = "0") Integer page,
-                                               @RequestParam(value = "size", defaultValue = "10") Integer size){
-
-        PageRequest pageRequest = new PageRequest(page,size);
-        Page<Banner> banners = bannerService.findByPage(bannerName, pageRequest);
-
+    @GetMapping
+    public ResultVO<Page<BannerVO>>  getBanner(BannerVO bannerCondition,
+                                               @RequestParam Integer page,
+                                               @RequestParam Integer size){
+        Pageable pageable = new PageRequest(page-1,size);
+        Page<BannerVO> banners = bannerService.findByPage(bannerCondition, pageable);
          return ResultVOUtils.success(banners);
     }
 
+    @DeleteMapping
+    public ResultVO<Map<String,String>> removeBanner(Long id){
+       return bannerService.removeBanner(id);
+    }
 }
 
 

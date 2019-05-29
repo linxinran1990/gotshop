@@ -2,7 +2,7 @@ package com.gotIt.gotshop.enumer;
 
 public enum CouponSituation {
 
-    COMMOM("通用",0);
+    COMMON("通用",0);
 
     private String name;
 

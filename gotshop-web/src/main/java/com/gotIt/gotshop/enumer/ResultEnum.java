@@ -48,6 +48,9 @@ public enum ResultEnum {
     LOGOUT_SUCCESS(26, "登出成功"),
 
     CATEGORY_INEFFECTIVE(27,"目录以失效"),
+
+    DELETE_NOT_EXIST(28,"删除对象不存在"),
+
     ;
 
     private Integer code;

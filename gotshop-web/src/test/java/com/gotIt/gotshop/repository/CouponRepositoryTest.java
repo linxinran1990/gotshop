@@ -24,7 +24,7 @@ public class CouponRepositoryTest extends BaseTest{
         coupon.setCouponValue(new BigDecimal(5));
         coupon.setEndDate(new Date());
         coupon.setStartDate(new Date(-10));
-        coupon.setSituation(CouponSituation.COMMOM);
+        coupon.setSituation(CouponSituation.COMMON);
         coupon.setCreateTime(new Date());
 
         couponRepository.save(coupon);

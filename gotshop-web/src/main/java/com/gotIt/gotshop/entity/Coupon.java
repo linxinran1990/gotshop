@@ -38,7 +38,7 @@ public class Coupon extends BaseEntity implements Serializable {
 
     @Column(name="situation",columnDefinition="tinyint default 0")
     @Enumerated(EnumType.ORDINAL)
-    private CouponSituation situation = CouponSituation.COMMOM;
+    private CouponSituation situation = CouponSituation.COMMON;
 
     @OneToMany(mappedBy = "coupon")
     private List<UserCoupon> users;

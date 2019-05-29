@@ -3,8 +3,12 @@ package com.gotIt.gotshop.service.admin.impl;
 import com.gotIt.gotshop.BaseTest;
 import com.gotIt.gotshop.entity.Category;
 import com.gotIt.gotshop.enumer.CategoryStatus;
+import com.gotIt.gotshop.vo.CategoryInfo;
+import com.gotIt.gotshop.vo.ResultVO;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import java.util.Map;
 
 import static org.junit.Assert.*;
 
@@ -15,13 +19,12 @@ public class CategoryServiceImplTest extends BaseTest{
 
     @Test
     public void save(){
-        Category category = new Category();
+        CategoryInfo category = new CategoryInfo();
         category.setCategoryName("肉类");
-        category.setCategoryStatus(CategoryStatus.EFFECTIVE);
         category.setParentId(0L);
         category.setSortOrder(2);
 
-      Category categoryResult = categoryService.save(category);
+      ResultVO<Map<String,String>> categoryResult = categoryService.save(category);
 
     }
 

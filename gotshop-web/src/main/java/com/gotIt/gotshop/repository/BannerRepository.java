@@ -10,7 +10,7 @@ import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 
-public interface BannerRepository extends JpaRepository<Banner,Long>{
+public interface BannerRepository extends JpaRepository<Banner,Long>,JpaSpecificationExecutor<Banner>{
 
     //@Query()
     List<Banner> findByBannerStatus(Status status);
