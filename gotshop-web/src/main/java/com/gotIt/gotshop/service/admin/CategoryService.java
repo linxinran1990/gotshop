@@ -1,8 +1,8 @@
 package com.gotIt.gotshop.service.admin;
 
+import com.gotIt.gotshop.app.support.ResultVO;
 import com.gotIt.gotshop.entity.Category;
 import com.gotIt.gotshop.vo.CategoryInfo;
-import com.gotIt.gotshop.vo.ResultVO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -18,4 +18,6 @@ public interface CategoryService {
     Page<CategoryInfo> findByPage(CategoryInfo categoryInfo,Pageable page);
 
     Long removeCategory(Long categoryId);
+
+    CategoryInfo findById(Long id);
 }

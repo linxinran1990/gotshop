@@ -1,11 +1,10 @@
 package com.gotIt.gotshop.service.admin;
 
+import com.gotIt.gotshop.app.support.ResultVO;
 import com.gotIt.gotshop.entity.Banner;
 import com.gotIt.gotshop.form.BannerForm;
 import com.gotIt.gotshop.vo.BannerVO;
-import com.gotIt.gotshop.vo.ResultVO;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
 import java.util.List;
@@ -26,5 +25,5 @@ public interface BannerService {
 
     ResultVO<Map<String, String>> removeBanner(Long bannerId);
 
-    Banner findOne(Long bannerId);
+    BannerVO findOne(Long bannerId);
 }

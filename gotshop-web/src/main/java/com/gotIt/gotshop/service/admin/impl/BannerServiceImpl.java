@@ -1,5 +1,7 @@
 package com.gotIt.gotshop.service.admin.impl;
 
+import com.gotIt.gotshop.app.support.ResultVO;
+import com.gotIt.gotshop.app.utils.ResultVOUtils;
 import com.gotIt.gotshop.entity.Banner;
 import com.gotIt.gotshop.entity.Product;
 import com.gotIt.gotshop.enumer.ResultEnum;
@@ -12,10 +14,8 @@ import com.gotIt.gotshop.repository.spec.BannerSpec;
 import com.gotIt.gotshop.service.admin.BannerService;
 import com.gotIt.gotshop.support.AbstractDomain2InfoConverter;
 import com.gotIt.gotshop.support.QueryResultConverter;
-import com.gotIt.gotshop.utils.ResultVOUtils;
 import com.gotIt.gotshop.vo.BannerInfo;
 import com.gotIt.gotshop.vo.BannerVO;
-import com.gotIt.gotshop.vo.ResultVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +23,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -56,6 +57,7 @@ public class BannerServiceImpl implements BannerService {
         Banner banner = new Banner();
         if(bannerForm.getId() !=null){
                 banner = bannerRepository.findOne(bannerForm.getId());
+                banner.setUpdateTime(new Date());
         }
 
         BeanUtils.copyProperties(bannerForm,banner);
@@ -100,8 +102,11 @@ public class BannerServiceImpl implements BannerService {
     }
 
     @Override
-    public Banner findOne(Long bannerId) {
-        return bannerRepository.findOne(bannerId);
+    public BannerVO findOne(Long bannerId) {
+      Banner banner = bannerRepository.findOne(bannerId);
+      BannerVO bannerVO = new BannerVO();
+      BeanUtils.copyProperties(banner,bannerVO);
+        return bannerVO;
     }
 }
 

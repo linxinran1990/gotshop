@@ -1,11 +1,13 @@
 package com.gotIt.gotshop.controller;
 
+import com.gotIt.gotshop.app.support.ResultVO;
+import com.gotIt.gotshop.app.utils.ResultVOUtils;
 import com.gotIt.gotshop.enumer.ResultEnum;
 import com.gotIt.gotshop.exception.ServiceException;
 import com.gotIt.gotshop.service.admin.CategoryService;
-import com.gotIt.gotshop.utils.ResultVOUtils;
 import com.gotIt.gotshop.vo.CategoryInfo;
-import com.gotIt.gotshop.vo.ResultVO;
+import com.gotIt.gotshop.vo.CategoryUpdateForm;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -30,7 +32,20 @@ public class CategoryController {
     private CategoryService categoryService;
 
     @PostMapping
-    public ResultVO<Map<String,String>> saveCategory(@Valid @RequestBody CategoryInfo categoryInfo,
+    public ResultVO<Map<String,String>> updateCategory(@Valid @RequestBody CategoryUpdateForm categoryUpdateForm,
+                                                     BindingResult bindingResult){
+        if(bindingResult.hasErrors()){
+            String msg = bindingResult.getFieldError().getDefaultMessage().toString();
+            throw new ServiceException(ResultEnum.PARAM_ERROR.getCode(), msg);
+        }
+
+        CategoryInfo categoryInfo = new CategoryInfo();
+        BeanUtils.copyProperties(categoryUpdateForm,categoryInfo);
+        return categoryService.save(categoryInfo);
+    }
+
+    @PutMapping
+    public ResultVO<Map<String,String>> createCategory(@Valid @RequestBody CategoryInfo categoryInfo,
                                                      BindingResult bindingResult){
         if(bindingResult.hasErrors()){
             String msg = bindingResult.getFieldError().getDefaultMessage().toString();
@@ -46,6 +61,12 @@ public class CategoryController {
         Pageable pageable = new PageRequest(page-1,size);
         Page<CategoryInfo> categoryInfoPage = categoryService.findByPage(categoryInfo,pageable);
         return ResultVOUtils.success(categoryInfoPage);
+    }
+
+    @GetMapping("/{id}")
+    public ResultVO<CategoryInfo> getOne(@PathVariable Long id){
+       CategoryInfo categoryInfo = categoryService.findById(id);
+       return ResultVOUtils.success(categoryInfo);
     }
 
     @DeleteMapping

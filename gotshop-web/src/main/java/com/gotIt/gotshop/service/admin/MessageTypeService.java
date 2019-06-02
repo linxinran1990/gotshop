@@ -1,8 +1,7 @@
 package com.gotIt.gotshop.service.admin;
 
-import com.gotIt.gotshop.entity.MessageType;
+import com.gotIt.gotshop.app.support.ResultVO;
 import com.gotIt.gotshop.vo.MessageTypeInfo;
-import com.gotIt.gotshop.vo.ResultVO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -15,4 +14,6 @@ public interface MessageTypeService {
     Page<MessageTypeInfo> findByPage(MessageTypeInfo messageTypeInfo,Pageable pageable);
 
     Long removeMessageType(Long id);
+
+    MessageTypeInfo findById(Long id);
 }

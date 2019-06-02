@@ -1,5 +1,7 @@
 package com.gotIt.gotshop.service.admin.impl;
 
+import com.gotIt.gotshop.app.support.ResultVO;
+import com.gotIt.gotshop.app.utils.ResultVOUtils;
 import com.gotIt.gotshop.entity.Category;
 import com.gotIt.gotshop.entity.Product;
 import com.gotIt.gotshop.enumer.CategoryStatus;
@@ -11,17 +13,12 @@ import com.gotIt.gotshop.repository.ProductRepository;
 import com.gotIt.gotshop.service.admin.ProductService;
 import com.gotIt.gotshop.support.AbstractDomain2InfoConverter;
 import com.gotIt.gotshop.support.QueryResultConverter;
-import com.gotIt.gotshop.utils.ResultVOUtils;
 import com.gotIt.gotshop.vo.ProductInfo;
-import com.gotIt.gotshop.vo.ResultVO;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
-import java.awt.print.Book;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -76,6 +73,16 @@ public class ProductServiceImpl implements ProductService {
     public Long removeProduct(Long productId) {
         productRepository.delete(productId);
         return productId;
+    }
+
+    @Override
+    public ProductInfo findById(Long id) {
+        Product product = productRepository.findOne(id);
+        ProductInfo productInfo = new ProductInfo();
+        BeanUtils.copyProperties(product,productInfo);
+        productInfo.setCategoryName(product.getCategory().getCategoryName());
+        productInfo.setCategoryId(product.getCategory().getId());
+        return productInfo;
     }
 }
 

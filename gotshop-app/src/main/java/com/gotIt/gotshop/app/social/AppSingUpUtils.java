@@ -3,8 +3,8 @@
  */
 package com.gotIt.gotshop.app.social;
 
-
-import com.gotIt.gotshop.app.AppSecretException;
+import com.gotIt.gotshop.app.MyAppSecretException;
+import com.gotIt.gotshop.app.enumer.ResultEnum;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -39,7 +39,7 @@ public class AppSingUpUtils {
 	public void doPostSignUp(WebRequest request, String userId) {
 		String key = getKey(request);
 		if(!redisTemplate.hasKey(key)){
-			throw new AppSecretException("无法找到缓存的用户社交账号信息");
+			throw new MyAppSecretException(ResultEnum.USER_ERROR.getCode(),"无法找到缓存的用户社交账号信息");
 		}
 		ConnectionData connectionData = (ConnectionData) redisTemplate.opsForValue().get(key);
 		Connection<?> connection = connectionFactoryLocator.getConnectionFactory(connectionData.getProviderId())
@@ -52,7 +52,7 @@ public class AppSingUpUtils {
 	private String getKey(WebRequest request) {
 		String deviceId = request.getHeader("deviceId");
 		if (StringUtils.isBlank(deviceId)) {
-			throw new AppSecretException("设备id参数不能为空");
+			throw new MyAppSecretException(ResultEnum.USER_ERROR.getCode(),"设备id参数不能为空");
 		}
 		return "gotshop:security:social.connect." + deviceId;
 	}

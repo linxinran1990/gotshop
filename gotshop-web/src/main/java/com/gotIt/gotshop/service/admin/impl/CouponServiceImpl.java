@@ -1,5 +1,7 @@
 package com.gotIt.gotshop.service.admin.impl;
 
+import com.gotIt.gotshop.app.support.ResultVO;
+import com.gotIt.gotshop.app.utils.ResultVOUtils;
 import com.gotIt.gotshop.entity.Coupon;
 import com.gotIt.gotshop.enumer.CouponSituation;
 import com.gotIt.gotshop.repository.CouponRepository;
@@ -7,16 +9,15 @@ import com.gotIt.gotshop.repository.spec.CouponSpec;
 import com.gotIt.gotshop.service.admin.CouponService;
 import com.gotIt.gotshop.support.AbstractDomain2InfoConverter;
 import com.gotIt.gotshop.support.QueryResultConverter;
-import com.gotIt.gotshop.utils.ResultVOUtils;
 import com.gotIt.gotshop.vo.CategoryInfo;
 import com.gotIt.gotshop.vo.CouponInfo;
-import com.gotIt.gotshop.vo.ResultVO;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -37,6 +38,7 @@ public class CouponServiceImpl implements CouponService{
         Coupon coupon = new Coupon();
         if(couponInfo.getId()!=null){
             coupon = couponRepository.findOne(couponInfo.getId());
+            coupon.setUpdateTime(new Date());
         }
         BeanUtils.copyProperties(couponInfo,coupon);
         couponRepository.save(coupon);
@@ -60,6 +62,14 @@ public class CouponServiceImpl implements CouponService{
     public Long removeCoupon(Long couponId) {
         couponRepository.delete(couponId);
         return couponId;
+    }
+
+    @Override
+    public CouponInfo findById(Long id) {
+        Coupon coupon = couponRepository.findOne(id);
+        CouponInfo couponInfo = new CouponInfo();
+        BeanUtils.copyProperties(coupon,couponInfo);
+        return couponInfo;
     }
 
 

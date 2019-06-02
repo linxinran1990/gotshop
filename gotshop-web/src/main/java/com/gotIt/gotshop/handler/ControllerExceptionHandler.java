@@ -1,9 +1,10 @@
 package com.gotIt.gotshop.handler;
 
+import com.gotIt.gotshop.app.MyAppSecretException;
+import com.gotIt.gotshop.app.support.ResultVO;
+import com.gotIt.gotshop.app.utils.ResultVOUtils;
 import com.gotIt.gotshop.enumer.ResultEnum;
 import com.gotIt.gotshop.exception.ServiceException;
-import com.gotIt.gotshop.utils.ResultVOUtils;
-import com.gotIt.gotshop.vo.ResultVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -21,9 +22,18 @@ public class ControllerExceptionHandler {
     @ExceptionHandler(ServiceException.class)
     @ResponseBody
     public ResultVO handleServiceException(ServiceException ex){
+            ex.getLocalizedMessage();
+            ex.printStackTrace();
             return ResultVOUtils.error(ex.getCode(),ex.getLocalizedMessage());
     }
 
+
+    @ExceptionHandler(MyAppSecretException.class)
+    @ResponseBody
+    public ResultVO handleServiceException(MyAppSecretException ex){
+        ex.printStackTrace();
+        return ResultVOUtils.error(ex.getCode(),ex.getLocalizedMessage());
+    }
 
     @ExceptionHandler(Exception.class)
     @ResponseBody

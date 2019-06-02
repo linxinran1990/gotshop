@@ -1,11 +1,11 @@
 package com.gotIt.gotshop.controller;
 
+import com.gotIt.gotshop.app.support.ResultVO;
+import com.gotIt.gotshop.app.utils.ResultVOUtils;
 import com.gotIt.gotshop.enumer.ResultEnum;
 import com.gotIt.gotshop.exception.ServiceException;
 import com.gotIt.gotshop.service.admin.MessageTypeService;
-import com.gotIt.gotshop.utils.ResultVOUtils;
 import com.gotIt.gotshop.vo.MessageTypeInfo;
-import com.gotIt.gotshop.vo.ResultVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -46,6 +46,13 @@ public class MessageTypeController {
         Pageable pageable = new PageRequest(page-1,size);
         Page<MessageTypeInfo> messageTypeInfoPage = messageTypeService.findByPage(messageTypeInfo,pageable);
         return ResultVOUtils.success(messageTypeInfoPage);
+    }
+
+    @GetMapping("/{id}")
+    public ResultVO<MessageTypeInfo> getOne(@PathVariable Long id){
+        MessageTypeInfo messageTypeInfo = messageTypeService.findById(id);
+        return ResultVOUtils.success(messageTypeInfo);
+
     }
 
     @DeleteMapping

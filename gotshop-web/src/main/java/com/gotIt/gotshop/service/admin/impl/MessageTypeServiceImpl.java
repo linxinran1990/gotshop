@@ -1,5 +1,7 @@
 package com.gotIt.gotshop.service.admin.impl;
 
+import com.gotIt.gotshop.app.support.ResultVO;
+import com.gotIt.gotshop.app.utils.ResultVOUtils;
 import com.gotIt.gotshop.entity.Coupon;
 import com.gotIt.gotshop.entity.MessageType;
 import com.gotIt.gotshop.enumer.Status;
@@ -8,16 +10,14 @@ import com.gotIt.gotshop.repository.spec.MessageTypeSpec;
 import com.gotIt.gotshop.service.admin.MessageTypeService;
 import com.gotIt.gotshop.support.AbstractDomain2InfoConverter;
 import com.gotIt.gotshop.support.QueryResultConverter;
-import com.gotIt.gotshop.utils.ResultVOUtils;
-import com.gotIt.gotshop.vo.CouponInfo;
 import com.gotIt.gotshop.vo.MessageTypeInfo;
-import com.gotIt.gotshop.vo.ResultVO;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -38,6 +38,7 @@ public class MessageTypeServiceImpl implements MessageTypeService {
         MessageType messageType = new MessageType();
         if(messageTypeInfo.getId()!=null){
             messageType = messageTypeRepository.findOne(messageTypeInfo.getId());
+            messageType.setUpdateTime(new Date());
         }
         BeanUtils.copyProperties(messageTypeInfo,messageType);
         messageType.setTypeStatus(Status.USING);
@@ -62,6 +63,14 @@ public class MessageTypeServiceImpl implements MessageTypeService {
     public Long removeMessageType(Long id) {
          messageTypeRepository.delete(id);
          return id;
+    }
+
+    @Override
+    public MessageTypeInfo findById(Long id) {
+        MessageType messageType = messageTypeRepository.findOne(id);
+        MessageTypeInfo messageTypeInfo = new MessageTypeInfo();
+        BeanUtils.copyProperties(messageType,messageTypeInfo);
+        return null;
     }
 }
 

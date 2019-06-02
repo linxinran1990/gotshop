@@ -39,6 +39,8 @@ public class GotshopAuthenticationFailHandler extends SimpleUrlAuthenticationFai
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException, ServletException {
         log.info("登录失败");
         if(LoginType.JSON.equals(securityProperties.getBrowser().getLoginType())) {
+            log.info("json");
+            response.setStatus(HttpStatus.OK.value());
             response.setContentType("application/json;charset=UTF-8");
             response.getWriter().write(objectMapper.writeValueAsString(ResultVOUtils.error(ResultEnum.LOGIN_FAIL.getCode(),ResultEnum.LOGIN_FAIL.getMessage())));
             log.info(exception.toString());

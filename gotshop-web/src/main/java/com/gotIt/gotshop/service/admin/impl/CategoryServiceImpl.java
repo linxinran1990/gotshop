@@ -1,5 +1,7 @@
 package com.gotIt.gotshop.service.admin.impl;
 
+import com.gotIt.gotshop.app.support.ResultVO;
+import com.gotIt.gotshop.app.utils.ResultVOUtils;
 import com.gotIt.gotshop.entity.Banner;
 import com.gotIt.gotshop.entity.Category;
 import com.gotIt.gotshop.enumer.CategoryStatus;
@@ -10,10 +12,8 @@ import com.gotIt.gotshop.repository.spec.CategorySpec;
 import com.gotIt.gotshop.service.admin.CategoryService;
 import com.gotIt.gotshop.support.AbstractDomain2InfoConverter;
 import com.gotIt.gotshop.support.QueryResultConverter;
-import com.gotIt.gotshop.utils.ResultVOUtils;
 import com.gotIt.gotshop.vo.BannerVO;
 import com.gotIt.gotshop.vo.CategoryInfo;
-import com.gotIt.gotshop.vo.ResultVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +21,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -41,8 +42,18 @@ public class CategoryServiceImpl implements CategoryService {
     public ResultVO<Map<String,String>> save(CategoryInfo categoryInfo) {
         Map map = new HashMap();
         Category category = new Category();
+        if(categoryInfo.getCategoryName()!=null){
+            Category categoryByName = categoryRepository.findByCategoryName(categoryInfo.getCategoryName());
+            if(categoryInfo.getId()!=null&&categoryByName!=null&&!categoryInfo.getId().equals(categoryByName.getId())){
+                throw new ServiceException(ResultEnum.CATEGORY_EXIST);
+            }else if(categoryByName!=null&&categoryInfo.getId()==null){
+                throw new ServiceException(ResultEnum.CATEGORY_EXIST);
+            }
+        }
+
         if(categoryInfo.getId()!=null){
             category = categoryRepository.findOne(categoryInfo.getId());
+            category.setUpdateTime(new Date());
         }
         if(categoryInfo.getParentId() == null){
             categoryInfo.setParentId(0L);
@@ -80,6 +91,14 @@ public class CategoryServiceImpl implements CategoryService {
             throw new ServiceException(ResultEnum.DELETE_NOT_EXIST);
         }
         return categoryId;
+    }
+
+    @Override
+    public CategoryInfo findById(Long id) {
+        Category category = categoryRepository.findOne(id);
+        CategoryInfo categoryInfo = new CategoryInfo();
+        BeanUtils.copyProperties(category,categoryInfo);
+        return categoryInfo;
     }
 }
 

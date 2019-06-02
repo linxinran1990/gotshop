@@ -1,10 +1,10 @@
 package com.gotIt.gotshop.service.admin.impl;
 
 import com.gotIt.gotshop.BaseTest;
+import com.gotIt.gotshop.app.support.ResultVO;
 import com.gotIt.gotshop.entity.Category;
 import com.gotIt.gotshop.enumer.CategoryStatus;
 import com.gotIt.gotshop.vo.CategoryInfo;
-import com.gotIt.gotshop.vo.ResultVO;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 

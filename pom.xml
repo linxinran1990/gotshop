@@ -16,10 +16,10 @@
 
     <!--管理所有的模块-->
     <modules>
-        <module>gotshop-web</module>
         <module>gotshop-security</module>
         <module>gotshop-app</module>
         <module>gotshop-browser</module>
+        <module>gotshop-web</module>
     </modules>
 
     <!--指定spring io管理依赖-->
@@ -98,20 +98,18 @@
 
     </dependencies>
 
-    <!--<build>
+    <build>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>2.3.2</version>
+                <version>3.8.0</version>
                 <configuration>
                     <source>1.8</source>
                     <target>1.8</target>
-                    <encoding>UTF-8</encoding>
                 </configuration>
             </plugin>
         </plugins>
-        <finalName>gotshop</finalName>
-    </build>-->
+    </build>
 
 </project>

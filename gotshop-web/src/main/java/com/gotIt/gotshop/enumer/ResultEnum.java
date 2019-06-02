@@ -51,6 +51,8 @@ public enum ResultEnum {
 
     DELETE_NOT_EXIST(28,"删除对象不存在"),
 
+    CATEGORY_EXIST(29,"目录已经存在"),
+
     ;
 
     private Integer code;
